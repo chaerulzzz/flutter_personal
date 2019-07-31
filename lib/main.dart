@@ -1,30 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter_personal/blocs/authentication/authentication_bloc.dart';
 import 'package:flutter_personal/keys/flutter_widget_keys.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_personal/repository/todo_repository.dart';
+import 'package:flutter_personal/screens/splash_screen.dart';
 import 'package:flutter_personal/commons/localizations.dart';
 import 'package:flutter_personal/commons/uuid.dart';
 import 'package:flutter_personal/blocs/blocs.dart';
 import 'package:flutter_personal/repository/models/todo.dart';
+import 'package:flutter_personal/repository/user_repository.dart';
 import 'package:flutter_personal/screens/screens.dart';
 import 'package:flutter_personal/commons/routes.dart';
 
+
 void main() {
   BlocSupervisor.delegate = SimpleBlocDelegate();
+  final UserRepository userRepository = UserRepository();
+
   runApp(
-    BlocProvider(
-      builder: (context) {
-        return TodosBloc(
-          todosRepository: TodoRepository(),
-        )..dispatch(LoadTodos());
-      },
-      child: TodosApp(),
-    ),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<TodosBloc> (builder: (context) 
+            => TodosBloc(todosRepository: TodoRepository())..dispatch(LoadTodos())
+        ),
+        BlocProvider<AuthenticationBloc>(builder: (context) => AuthenticationBloc(userRepository: userRepository)..dispatch(AppStarted())),
+      ],
+      child: TodosApp(userRepository: userRepository),
+    )
   );
 }
 
 class TodosApp extends StatelessWidget {
+  final UserRepository repository;
+
+    TodosApp({Key key, @required UserRepository userRepository}) : assert(userRepository != null),
+      repository = userRepository, 
+      super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final todosBloc = BlocProvider.of<TodosBloc>(context);
@@ -34,20 +47,29 @@ class TodosApp extends StatelessWidget {
         FlutterBlocLocalizationsDelegate(),
       ],
       routes: {
-        MainRoutes.home: (context) {
-          return MultiBlocProvider(
-            providers: [
-              BlocProvider<TabBloc>(
-                builder: (context) => TabBloc(),
-              ),
-              BlocProvider<FilteredTodosBloc>(
-                builder: (context) => FilteredTodosBloc(todosBloc: todosBloc),
-              ),
-              BlocProvider<StatsBloc>(
-                builder: (context) => StatsBloc(todosBloc: todosBloc),
-              ),
-            ],
-            child: HomeScreen(),
+        MainRoutes.login: (context) {
+          return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+            builder: (context, state) {
+                if (state is UnInitialized) {
+                  return SplashScreen();
+                }
+
+                if (state is UnAuthenticated) {
+                  return LoginScreen(userRepository: repository);
+                }
+
+                if (state is Authenticated) {
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider<TabBloc>(builder: (context) => TabBloc()),
+                      BlocProvider<FilteredTodosBloc>(builder: (context) => FilteredTodosBloc(todosBloc: todosBloc)),
+                      BlocProvider<StatsBloc>(builder: (context) => StatsBloc(todosBloc: todosBloc)),
+                    ],
+                  child: HomeScreen(),
+                );
+               }
+              return null;
+            }
           );
         },
         MainRoutes.addTodo: (context) {

@@ -10,7 +10,7 @@ class FlutterBlocLocalizations {
     );
   }
 
-  String get appTitle => "Todos";
+  String get appTitle => "My App";
 }
 
 class FlutterBlocLocalizationsDelegate
