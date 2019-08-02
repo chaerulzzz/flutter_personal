@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:flutter_personal/models/app_tab.dart';
+import 'package:flutter_personal/repository/models/models.dart';
 
 @immutable
 abstract class TabEvent extends Equatable {

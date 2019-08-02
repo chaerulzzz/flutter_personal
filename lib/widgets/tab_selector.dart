@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_personal/models/models.dart';
+import 'package:flutter_personal/repository/models/models.dart';
 import 'package:flutter_personal/keys/flutter_widget_keys.dart';
 
 class TabSelector extends StatelessWidget {

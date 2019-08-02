@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:flutter_personal/blocs/filtered_todos/filtered_todos.dart';
 import 'package:flutter_personal/blocs/todos/todos.dart';
 import 'package:flutter_personal/repository/models/todo.dart';
-import 'package:flutter_personal/models/visibility_filter.dart';
+import 'package:flutter_personal/repository/models/visibility_filter.dart';
 
 class FilteredTodosBloc extends Bloc<FilteredTodosEvent, FilteredTodosState> {
   final TodosBloc todosBloc;

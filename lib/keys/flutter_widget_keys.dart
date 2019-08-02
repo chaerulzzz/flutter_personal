@@ -62,4 +62,7 @@ class WidgetKeys {
 
   // Todo Item Widget
   static final todoItemWidgetKey = const Key('__todoItemWidgetKey');
+
+  // Drawer
+  static final drawerKey = const Key('__drawerKey__');
 }

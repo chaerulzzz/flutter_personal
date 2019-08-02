@@ -6,6 +6,7 @@ import 'package:flutter_personal/repository/models/todo.dart';
 class TodoItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
+  final GestureLongPressCallback onLongTap;
   final ValueChanged<bool> onCheckboxChanged;
   final Todo todo;
 
@@ -13,6 +14,7 @@ class TodoItem extends StatelessWidget {
     Key key,
     @required this.onDismissed,
     @required this.onTap,
+    @required this.onLongTap,
     @required this.onCheckboxChanged,
     @required this.todo,
   }) : super(key: key ?? WidgetKeys.todoItemWidgetKey);
@@ -24,6 +26,7 @@ class TodoItem extends StatelessWidget {
       onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,
+        onLongPress: onLongTap,
         leading: Checkbox(
           key: key,
           value: todo.isDone,

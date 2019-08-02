@@ -5,3 +5,4 @@ export './todos/todos.dart';
 export './bloc_delegate.dart';
 export './authentication/authentication.dart';
 export './login/login.dart';
+export './menu/menu.dart';

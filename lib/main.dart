@@ -59,14 +59,7 @@ class TodosApp extends StatelessWidget {
                 }
 
                 if (state is Authenticated) {
-                  return MultiBlocProvider(
-                    providers: [
-                      BlocProvider<TabBloc>(builder: (context) => TabBloc()),
-                      BlocProvider<FilteredTodosBloc>(builder: (context) => FilteredTodosBloc(todosBloc: todosBloc)),
-                      BlocProvider<StatsBloc>(builder: (context) => StatsBloc(todosBloc: todosBloc)),
-                    ],
-                  child: HomeScreen(),
-                );
+                 return BlocProvider(builder: (context) => MenuBloc(), child: MainScreen(name: state.displayName),);
                }
               return null;
             }

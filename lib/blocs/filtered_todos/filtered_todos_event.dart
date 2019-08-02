@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter_personal/repository/models/todo.dart';
-import 'package:flutter_personal/models/visibility_filter.dart';
+import 'package:flutter_personal/repository/models/visibility_filter.dart';
 
 @immutable
 abstract class FilteredTodosEvent extends Equatable {

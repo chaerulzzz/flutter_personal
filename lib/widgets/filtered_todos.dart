@@ -53,6 +53,26 @@ class FilteredTodos extends StatelessWidget {
                     ));
                   }**/
                 },
+                onLongTap: () async {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return AddEditScreen(
+                            key: WidgetKeys.editTodoScreen,
+                            onSave: (task, note) {
+                              todosBloc.dispatch(
+                                UpdateTodo(
+                                  todo.copyWith(task: task, note: note),
+                                ),
+                              );
+                            },
+                            isEditing: true,
+                            todo: todo,
+                          );
+                        },
+                      ),
+                    );
+                },
                 onCheckboxChanged: (_) {
                   todosBloc.dispatch(
                     UpdateTodo(todo.copyWith(isDone: !todo.isDone)),

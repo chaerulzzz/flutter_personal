@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_personal/blocs/filtered_todos/filtered_todos.dart';
-import 'package:flutter_personal/repository/models/todo.dart';
 import 'package:flutter_personal/keys/flutter_widget_keys.dart';
-import 'package:flutter_personal/models/visibility_filter.dart';
+import 'package:flutter_personal/repository/models/visibility_filter.dart';
 
 class FilterButton extends StatelessWidget {
   final bool visible;

@@ -23,99 +23,51 @@ class DetailsScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text('Todo Details'),
-            actions: [
-              IconButton(
-                tooltip: 'Delete Todo',
-                key: WidgetKeys.deleteTodoButton,
-                icon: Icon(Icons.delete),
-                onPressed: () {
-                  todosBloc.dispatch(DeleteTodo(todo));
-                  Navigator.pop(context, todo);
-                },
-              )
-            ],
           ),
           body: todo == null
-              ? Container(key: FlutterTodosKeys.emptyDetailsContainer)
+            ? Container(key: FlutterTodosKeys.emptyDetailsContainer)
               : Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: ListView(
-                    children: [
-                      Row(
+            padding: EdgeInsets.all(16.0),
+            child: ListView(
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 8.0),
+                    ),
+                    Expanded(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: EdgeInsets.only(right: 8.0),
-                            child: Checkbox(
-                                key: FlutterTodosKeys.detailsScreenCheckBox,
-                                value: todo.isDone,
-                                onChanged: (_) {
-                                  todosBloc.dispatch(
-                                    UpdateTodo(
-                                      todo.copyWith(isDone: !todo.isDone),
-                                    ),
-                                  );
-                                }),
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Hero(
-                                  tag: '${todo.id}__heroTag',
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    padding: EdgeInsets.only(
-                                      top: 8.0,
-                                      bottom: 16.0,
-                                    ),
-                                    child: Text(
-                                      todo.task,
-                                      key: WidgetKeys.detailsTodoItemTask,
-                                      style:
-                                          Theme.of(context).textTheme.headline,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  todo.note,
-                                  key: WidgetKeys.detailsTodoItemNote,
-                                  style: Theme.of(context).textTheme.subhead,
-                                ),
-                              ],
+                          Hero(
+                            tag: '${todo.id}__heroTag',
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              padding: EdgeInsets.only(
+                                top: 8.0,
+                                bottom: 16.0,
+                              ),
+                              child: Text(
+                                todo.task,
+                                key: WidgetKeys.detailsTodoItemTask,
+                                style:
+                                    Theme.of(context).textTheme.headline,
+                              ),
                             ),
+                          ),
+                          Text(
+                            todo.note,
+                            key: WidgetKeys.detailsTodoItemNote,
+                            style: Theme.of(context).textTheme.subhead,
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-          floatingActionButton: FloatingActionButton(
-            key: WidgetKeys.editTodoFab,
-            tooltip: 'Edit Todo',
-            child: Icon(Icons.edit),
-            onPressed: todo == null
-                ? null
-                : () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return AddEditScreen(
-                            key: WidgetKeys.editTodoScreen,
-                            onSave: (task, note) {
-                              todosBloc.dispatch(
-                                UpdateTodo(
-                                  todo.copyWith(task: task, note: note),
-                                ),
-                              );
-                            },
-                            isEditing: true,
-                            todo: todo,
-                          );
-                        },
-                      ),
-                    );
-                  },
+              ],
+            ),
           ),
         );
       },
