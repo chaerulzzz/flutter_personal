@@ -1,4 +1,5 @@
     
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:flutter_personal/repository/models/models.dart';
@@ -17,13 +18,9 @@ class PostRepository {
     }
   }
 
-  Future<Post> getAllPosts() async {
-    final response = await http.get(url);
+  Future<List<Post>> fetchPosts(http.Client client) async {
+    final response = await client.get(url);
 
-    if (response.statusCode == 200) {
-      return postFromJson(response.body);
-    } else {
-      throw Exception('failed to load post');
-    }
+    return compute(parsePosts , response.body);
   }
 }

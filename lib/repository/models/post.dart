@@ -33,6 +33,12 @@ Post postFromJson(String str) {
     return Post.fromJson(jsonData);
 }
 
+List<Post> parsePosts(String responseBody) {
+  final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+
+  return parsed.map<Post>((json) => Post.fromJson(json)).toList();
+}
+
 String postToJson(Post data) {
     final dyn = data.toJson();
     return json.encode(dyn);

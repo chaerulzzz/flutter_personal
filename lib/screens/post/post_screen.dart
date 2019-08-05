@@ -5,6 +5,7 @@ import 'package:flutter_personal/commons/localizations.dart';
 import 'package:flutter_personal/repository/models/models.dart';
 import 'package:flutter_personal/repository/api/services.dart';
 import 'package:flutter_personal/widgets/main_drawer.dart';
+import 'package:http/http.dart' as http;
 
 class PostScreen extends StatelessWidget {
   final String name;
@@ -16,8 +17,8 @@ class PostScreen extends StatelessWidget {
     final menuBloc = BlocProvider.of<MenuBloc>(context);
     return Scaffold(
       appBar: AppBar(title: Text(FlutterBlocLocalizations.of(context).appTitle)),
-      body: FutureBuilder(
-        future: PostRepository().getAllPosts(),
+      body: FutureBuilder<List<Post>>(
+        future: PostRepository().fetchPosts(http.Client()),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
