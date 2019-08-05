@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_personal/blocs/blocs.dart';
+import 'package:flutter_personal/screens/post/post_screen.dart';
 import 'package:flutter_personal/screens/todos/todos_screen.dart';
 import 'package:flutter_personal/repository/models/models.dart';
 import 'package:flutter_personal/screens/home_screen.dart';
@@ -45,9 +46,15 @@ class MainScreen extends StatelessWidget {
           );
         }
 
+        if (activeMenu == MainDrawerTab.post) {
+          return PostScreen(name: name);
+        }
+
         if (activeMenu == MainDrawerTab.logout) {
           BlocProvider.of<AuthenticationBloc>(context).dispatch(LoggedOut()); 
+          return CircularProgressIndicator();
         }
+
         return null;
       },
     );

@@ -56,6 +56,18 @@ class MainDrawer extends StatelessWidget {
                           },
                       ),
                       selectedColor: Colors.lightBlueAccent,
+                    ),
+                    ListTileTheme(
+                      child: ListTile(
+                          leading: Icon(Icons.list),
+                          title: Text('Post'),
+                          selected: activeMenu == MainDrawerTab.post,
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            onMenuSelected(MainDrawerTab.values[3]);
+                          },
+                      ),
+                      selectedColor: Colors.lightBlueAccent,
                   )
                 ],
               )

@@ -1,1 +1,1 @@
-enum MainDrawerTab {home, todos, logout }
+enum MainDrawerTab {home, todos, logout, post }
